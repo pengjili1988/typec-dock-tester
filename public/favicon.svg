@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="128" height="128" viewBox="0 0 128 128">
+  <rect width="128" height="128" rx="16" fill="#409EFF"/>
+  <g fill="#fff">
+    <!-- USB-C connector -->
+    <rect x="44" y="40" width="40" height="48" rx="4"/>
+    <rect x="48" y="44" width="32" height="40" rx="2" fill="#409EFF"/>
+    <!-- Connector pins -->
+    <rect x="52" y="50" width="4" height="4" rx="1" fill="#fff"/>
+    <rect x="60" y="50" width="4" height="4" rx="1" fill="#fff"/>
+    <rect x="68" y="50" width="4" height="4" rx="1" fill="#fff"/>
+    <rect x="52" y="60" width="4" height="4" rx="1" fill="#fff"/>
+    <rect x="60" y="60" width="4" height="4" rx="1" fill="#fff"/>
+    <rect x="68" y="60" width="4" height="4" rx="1" fill="#fff"/>
+    <rect x="52" y="70" width="4" height="4" rx="1" fill="#fff"/>
+    <rect x="60" y="70" width="4" height="4" rx="1" fill="#fff"/>
+    <rect x="68" y="70" width="4" height="4" rx="1" fill="#fff"/>
+    <!-- Cable -->
+    <path d="M64 88 L64 100 Q64 108 72 108 L88 108" stroke="#fff" stroke-width="8" fill="none" stroke-linecap="round"/>
+  </g>
+</svg>

@@ -1,5 +1,6 @@
-# Public assets
-/public/**
+# Dependencies
+node_modules/
+
 
 # Tauri
 src-tauri/target/** 
