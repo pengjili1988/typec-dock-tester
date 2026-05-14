@@ -1,0 +1,17 @@
+{
+  "$schema": "https://schema.tauri.app/config/2/Capabilities",
+  "identifier": "hardware",
+  "description": "Hardware access capabilities for the Dock Tester app",
+  "windows": ["main"],
+  "permissions": [
+    "core:default",
+    "shell:allow-open",
+    "fs:default",
+    "fs:allow-read",
+    "fs:allow-write",
+    "fs:allow-exists",
+    "dialog:default",
+    "dialog:allow-open",
+    "dialog:allow-save"
+  ]
+}

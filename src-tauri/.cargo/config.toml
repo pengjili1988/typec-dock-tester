@@ -1,0 +1,16 @@
+[target.x86_64-pc-windows-gnu]
+linker = "C:/Users/Administrator/mingo81/mingw64/bin/gcc.exe"
+ar = "C:/Users/Administrator/mingo81/mingw64/bin/ar.exe"
+rustflags = ["-L", "C:/Users/Administrator/mingo81/mingw64/x86_64-w64-mingw32/lib"]
+
+[build]
+target-dir = "C:/Users/Administrator/.cargo-target"
+
+[profile.dev]
+opt-level = 0
+debug = false
+
+[profile.release]
+opt-level = "s"
+lto = false
+codegen-units = 16

@@ -1,0 +1,124 @@
+{
+  "version": "1.0.0",
+  "name": "USBC-001 测试配置",
+  "createdAt": "2024-01-15T08:00:00Z",
+  "updatedAt": "2024-03-20T14:30:00Z",
+  "author": "系统管理员",
+  "description": "适用于型号USBC-001的TYPE-C扩展坞产品测试配置",
+  "product": {
+    "model": "USBC-001",
+    "vid": "0x1234",
+    "pid": "0x5678",
+    "fwVersion": "1.2.5",
+    "hwVersion": "A1"
+  },
+  "testItems": {
+    "usb": true,
+    "video": true,
+    "audio": true,
+    "network": true,
+    "pd": true,
+    "sd": true,
+    "firmware": true
+  },
+  "usb": {
+    "enabled": true,
+    "protocols": ["USB3.0", "USB3.1", "USB3.2"],
+    "speedThresholds": {
+      "readMin": 200,
+      "writeMin": 100
+    },
+    "voltageRange": {
+      "min": 4.75,
+      "max": 5.25
+    },
+    "ovpThreshold": 5.8,
+    "vidPidCheck": {
+      "expectedVid": "0x1234",
+      "expectedPid": "0x5678"
+    },
+    "timeout": 30000,
+    "retries": 3
+  },
+  "video": {
+    "enabled": true,
+    "ports": [
+      {
+        "portType": "HDMI",
+        "protocol": "HDMI2.0",
+        "resolutions": ["1920x1080@60Hz", "3840x2160@30Hz"],
+        "pixelMatchThreshold": 98,
+        "rgbTolerance": { "r": 10, "g": 10, "b": 10 },
+        "brightnessRange": { "min": 200, "max": 350 }
+      }
+    ]
+  },
+  "audio": {
+    "enabled": true,
+    "ports": [
+      {
+        "portType": "HDMI",
+        "expectedChannels": [2, 6, 8],
+        "frequencyRange": { "min": 20, "max": 20000 },
+        "sampleRates": [44100, 48000, 96000],
+        "snrThreshold": 80
+      }
+    ]
+  },
+  "network": {
+    "enabled": true,
+    "supportedSpeeds": ["1G", "2.5G"],
+    "speedThresholds": {
+      "1G": 900,
+      "2.5G": 2200
+    },
+    "macValidation": {
+      "format": "XX:XX:XX:XX:XX:XX",
+      "expectedPrefix": "A4:5E:60"
+    },
+    "macBurnEnabled": true,
+    "macSource": "mes"
+  },
+  "pd": {
+    "enabled": true,
+    "protocols": ["PD3.0", "PD3.1"],
+    "voltages": [5, 9, 12, 15, 20],
+    "currents": [1.5, 3, 5],
+    "maxPower": 100,
+    "voltageTolerance": 5,
+    "currentTolerance": 10,
+    "ocpThreshold": 5.5,
+    "otpThreshold": 85,
+    "emarkerCheck": true
+  },
+  "sd": {
+    "enabled": true,
+    "protocols": ["SD", "SDXC", "TF"],
+    "speedThresholds": {
+      "readMin": 80,
+      "writeMin": 40
+    },
+    "capacityRange": {
+      "min": 8,
+      "max": 256
+    },
+    "timeout": 60000
+  },
+  "firmware": {
+    "enabled": true,
+    "firmwareTypes": ["USB", "Video", "PD", "MCU"],
+    "versionSources": {
+      "USB": { "type": "usb", "address": "0x1000" },
+      "Video": { "type": "usb", "address": "0x2000" },
+      "PD": { "type": "usb", "address": "0x3000" },
+      "MCU": { "type": "flash", "address": "0x08000000" }
+    },
+    "compareMode": "exact",
+    "expectedVersions": {
+      "USB": "1.2.5",
+      "Video": "2.0.1",
+      "PD": "3.1.0",
+      "MCU": "1.0.8"
+    }
+  }
+}

@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>XFANIC TYPE-C Dock Tester</title>
+  <link rel="stylesheet" href="styles/main.css">
+</head>
+<body>
+  <div id="app">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="header-left">
+        <div class="logo-container">
+          <svg class="xfanic-logo" viewBox="0 0 200 60" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+              <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:#00d4ff;stop-opacity:1" />
+                <stop offset="50%" style="stop-color:#0088ff;stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#6600ff;stop-opacity:1" />
+              </linearGradient>
+              <filter id="glow">
+                <feGaussianBlur stdDeviation="2" result="coloredBlur"/>
+                <feMerge><feMergeNode in="coloredBlur"/><feMergeNode in="SourceGraphic"/></feMerge>
+              </filter>
+            </defs>
+            <!-- X -->
+            <text x="5" y="48" font-family="Arial Black, Arial" font-weight="900" font-size="52" fill="url(#logoGrad)" filter="url(#glow)">XFANIC</text>
+            <!-- Decorative underline -->
+            <rect x="5" y="52" width="185" height="3" fill="url(#logoGrad)" rx="1.5"/>
+          </svg>
+        </div>
+        <div class="title-area">
+          <h1 class="app-title" data-i18n="appTitle">XFANIC TYPE-C 扩展坞多功能测试系统</h1>
+          <p class="app-subtitle" data-i18n="appSubtitle">深圳市湘凡科技有限公司</p>
+        </div>
+      </div>
+      <div class="header-right">
+        <div class="lang-switcher">
+          <button class="lang-btn active" id="lang-zh" onclick="switchLang('zh')">
+            <span class="lang-flag">🇨🇳</span> 中文
+          </button>
+          <button class="lang-btn" id="lang-vi" onclick="switchLang('vi')">
+            <span class="lang-flag">🇻🇳</span> Tiếng Việt
+          </button>
+        </div>
+        <div class="header-status">
+          <div class="status-item" id="dock-connection-status" style="cursor:pointer;" onclick="checkDockConnection()">
+            <span class="status-dot" id="dock-dot" style="background:#888;"></span>
+            <span id="dock-status-text">Dock</span>
+          </div>
+          <div class="status-item">
+            <span class="status-dot" id="mes-dot"></span>
+            <span id="mes-status-text">MES</span>
+          </div>
+          <div class="status-item">
+            <span class="status-dot green"></span>
+            <span id="current-user-display">Admin</span>
+          </div>
+          <div class="datetime-display" id="datetime-display"></div>
+        </div>
+      </div>
+    </header>
+
+    <!-- Main Layout -->
+    <div class="main-layout">
+      <!-- Sidebar Navigation -->
+      <nav class="sidebar">
+        <div class="nav-items">
+          <a class="nav-item active" onclick="showPage('home')" data-page="home">
+            <span class="nav-icon">⊞</span>
+            <span class="nav-label" data-i18n="nav.home">测试主界面</span>
+          </a>
+          <div class="nav-divider"></div>
+          <a class="nav-item" onclick="showPage('usb')" data-page="usb">
+            <span class="nav-icon">⚡</span>
+            <span class="nav-label" data-i18n="nav.usb">USB功能</span>
+          </a>
+          <a class="nav-item" onclick="showPage('video')" data-page="video">
+            <span class="nav-icon">🖥</span>
+            <span class="nav-label" data-i18n="nav.video">视频接口</span>
+          </a>
+          <a class="nav-item" onclick="showPage('audio')" data-page="audio">
+            <span class="nav-icon">🔊</span>
+            <span class="nav-label" data-i18n="nav.audio">音频功能</span>
+          </a>
+          <a class="nav-item" onclick="showPage('sdcard')" data-page="sdcard">
+            <span class="nav-icon">💾</span>
+            <span class="nav-label" data-i18n="nav.sdcard">SD/TF卡</span>
+          </a>
+          <a class="nav-item" onclick="showPage('network')" data-page="network">
+            <span class="nav-icon">🌐</span>
+            <span class="nav-label" data-i18n="nav.network">网络接口</span>
+          </a>
+          <a class="nav-item" onclick="showPage('pd')" data-page="pd">
+            <span class="nav-icon">🔋</span>
+            <span class="nav-label" data-i18n="nav.pd">PD充电</span>
+          </a>
+          <a class="nav-item" onclick="showPage('fw')" data-page="fw">
+            <span class="nav-icon">📦</span>
+            <span class="nav-label" data-i18n="nav.fw">固件管理</span>
+          </a>
+          <div class="nav-divider"></div>
+          <a class="nav-item" onclick="showPage('fileManager')" data-page="fileManager">
+            <span class="nav-icon">📁</span>
+            <span class="nav-label" data-i18n="nav.fileManager">文件管理</span>
+          </a>
+          <a class="nav-item" onclick="showPage('users')" data-page="users">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label" data-i18n="nav.users">用户管理</span>
+          </a>
+          <a class="nav-item" onclick="showPage('settings')" data-page="settings">
+            <span class="nav-icon">⚙</span>
+            <span class="nav-label" data-i18n="nav.settings">系统设置</span>
+          </a>
+        </div>
+        <div class="sidebar-footer">
+          <div class="version-info">v1.0.0</div>
+        </div>
+      </nav>
+
+      <!-- Content Area -->
+      <main class="content-area" id="content-area">
+        <!-- Pages loaded dynamically -->
+      </main>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal-overlay" style="display:none;">
+    <div class="modal-box login-modal-box">
+      <div class="modal-header">
+        <svg class="modal-logo" viewBox="0 0 120 36" xmlns="http://www.w3.org/2000/svg">
+          <defs>
+            <linearGradient id="modalLogoGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" style="stop-color:#00d4ff"/>
+              <stop offset="100%" style="stop-color:#6600ff"/>
+            </linearGradient>
+          </defs>
+          <text x="2" y="28" font-family="Arial Black,Arial" font-weight="900" font-size="30" fill="url(#modalLogoGrad)">XFANIC</text>
+        </svg>
+        <h2 data-i18n="users.login">用户登录</h2>
+      </div>
+      <div class="modal-body">
+        <div class="form-group">
+          <label data-i18n="users.username">用户名</label>
+          <input type="text" id="login-username" class="form-input" placeholder="admin" autocomplete="username">
+        </div>
+        <div class="form-group">
+          <label data-i18n="users.password">密码</label>
+          <input type="password" id="login-password" class="form-input" placeholder="••••••" autocomplete="current-password">
+        </div>
+        <div id="login-error" class="login-error" style="display:none;"></div>
+        <div class="modal-footer">
+          <button class="btn btn-primary btn-large" onclick="doLogin()">
+            <span data-i18n="users.login">登录</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast-container"></div>
+
+  <script src="i18n/translations.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

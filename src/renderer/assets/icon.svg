@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="256" height="256" viewBox="0 0 256 256">
+  <rect width="256" height="256" fill="#0a0e1a" rx="32"/>
+  <defs>
+    <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#00d4ff"/>
+      <stop offset="50%" stop-color="#0088ff"/>
+      <stop offset="100%" stop-color="#6600ff"/>
+    </linearGradient>
+  </defs>
+  <text x="28" y="180" font-family="Arial Black" font-weight="900" font-size="120" fill="url(#g)">X</text>
+  <rect x="20" y="195" width="216" height="6" fill="url(#g)" rx="3"/>
+  <text x="28" y="230" font-family="Arial" font-weight="bold" font-size="26" fill="#8899bb">FANIC</text>
+</svg>

@@ -1,0 +1,164 @@
+{
+  "app": {
+    "name": "Hệ thống kiểm tra sản xuất Dock TYPE-C",
+    "version": "Phiên bản"
+  },
+  "nav": {
+    "home": "Trang chủ",
+    "test": "Kiểm tra",
+    "config": "Cấu hình",
+    "report": "Báo cáo",
+    "history": "Lịch sử",
+    "settings": "Cài đặt"
+  },
+  "test": {
+    "start": "Bắt đầu kiểm tra",
+    "stop": "Dừng kiểm tra",
+    "pause": "Tạm dừng",
+    "resume": "Tiếp tục",
+    "retry": "Thử lại",
+    "status": {
+      "idle": "Chờ kiểm tra",
+      "running": "Đang kiểm tra",
+      "passed": "Đạt",
+      "failed": "Không đạt",
+      "skipped": "Bỏ qua"
+    },
+    "items": {
+      "title": "Mục kiểm tra",
+      "usb": "Kiểm tra USB",
+      "video": "Kiểm tra Video",
+      "audio": "Kiểm tra Audio",
+      "network": "Kiểm tra Mạng",
+      "pd": "Kiểm tra PD sạc",
+      "sd": "Kiểm tra thẻ SD",
+      "firmware": "Kiểm tra Firmware"
+    },
+    "results": {
+      "title": "Kết quả kiểm tra",
+      "pass": "Đạt",
+      "fail": "Không đạt",
+      "error": "Lỗi",
+      "timeout": "Hết thời gian"
+    },
+    "progress": {
+      "title": "Tiến trình kiểm tra"
+    },
+    "emptyState": "Vui lòng chọn cấu hình và bắt đầu kiểm tra"
+  },
+  "config": {
+    "title": "Cấu hình tham số",
+    "import": "Nhập cấu hình",
+    "export": "Xuất cấu hình",
+    "new": "Tạo cấu hình mới",
+    "save": "Lưu",
+    "reset": "Đặt lại",
+    "list": "Danh sách cấu hình",
+    "product": "Thông tin sản phẩm",
+    "model": "Model",
+    "vid": "VID",
+    "pid": "PID",
+    "version": "Phiên bản",
+    "apply": "Áp dụng cấu hình",
+    "selectedSuccess": "Đã chọn cấu hình",
+    "appliedSuccess": "Đã áp dụng cấu hình",
+    "noConfigSelected": "Vui lòng chọn cấu hình trước",
+    "empty": "Chưa có cấu hình",
+    "selectHint": "Vui lòng chọn cấu hình từ danh sách bên trái",
+    "featureFlags": {
+      "mes": "Kết nối MES",
+      "scan": "Chức năng quét mã",
+      "print": "Chức năng in mã vạch"
+    }
+  },
+  "mes": {
+    "status": {
+      "title": "Trạng thái MES",
+      "connected": "Đã kết nối",
+      "disconnected": "Chưa kết nối",
+      "connecting": "Đang kết nối",
+      "error": "Lỗi kết nối"
+    },
+    "order": {
+      "title": "Thông tin đơn hàng",
+      "id": "Số đơn hàng",
+      "quantity": "Số lượng",
+      "completed": "Hoàn thành",
+      "remain": "Còn lại"
+    },
+    "upload": {
+      "success": "Tải lên dữ liệu MES thành công",
+      "failed": "Tải lên dữ liệu MES thất bại"
+    }
+  },
+  "report": {
+    "title": "Báo cáo kiểm tra",
+    "generate": "Tạo báo cáo",
+    "export": "Xuất báo cáo",
+    "print": "In",
+    "summary": {
+      "total": "Tổng số",
+      "passed": "Đạt",
+      "failed": "Không đạt",
+      "passRate": "Tỷ lệ đạt"
+    }
+  },
+  "settings": {
+    "language": "Cài đặt ngôn ngữ",
+    "currentLanguage": "Ngôn ngữ hiện tại",
+    "featureFlags": "Bật/tắt tính năng",
+    "mes": "Cấu hình MES",
+    "scan": "Cấu hình quét mã",
+    "print": "Cấu hình in ấn",
+    "about": "Giới thiệu",
+    "serverUrl": "Địa chỉ máy chủ",
+    "serverUrlHint": "http://mes.example.com",
+    "apiKey": "Khóa API",
+    "factoryCode": "Mã nhà máy",
+    "lineCode": "Mã dây chuyền",
+    "testConnection": "Kiểm tra kết nối",
+    "testingConnection": "Đang kiểm tra kết nối...",
+    "languageChanged": "Đã thay đổi ngôn ngữ",
+    "comPort": "Cổng COM",
+    "baudRate": "Tốc độ baud",
+    "printer": "Máy in",
+    "autoPrint": "In tự động",
+    "copyright": "© 2024 KouDouMa Tech"
+  },
+  "home": {
+    "deviceStatus": "Trạng thái thiết bị",
+    "currentConfig": "Cấu hình hiện tại",
+    "noConfig": "Chưa chọn cấu hình",
+    "quickActions": "Thao tác nhanh",
+    "recentResult": "Kết quả kiểm tra gần đây"
+  },
+  "common": {
+    "confirm": "Xác nhận",
+    "cancel": "Hủy",
+    "save": "Lưu",
+    "delete": "Xóa",
+    "edit": "Sửa",
+    "search": "Tìm kiếm",
+    "refresh": "Làm mới",
+    "loading": "Đang tải...",
+    "success": "Thao tác thành công",
+    "error": "Thao tác thất bại",
+    "warning": "Cảnh báo",
+    "info": "Thông tin"
+  },
+  "errors": {
+    "test_failed": "Kiểm tra thất bại",
+    "mes_sync_failed": "Đồng bộ MES thất bại",
+    "config_invalid": "Tham số cấu hình không hợp lệ",
+    "file_not_found": "Tệp không tồn tại",
+    "permission_denied": "Không có quyền"
+  },
+  "login": {
+    "title": "Đăng nhập",
+    "username": "Tên người dùng",
+    "password": "Mật khẩu",
+    "submit": "Đăng nhập",
+    "success": "Đăng nhập thành công",
+    "failed": "Đăng nhập thất bại"
+  }
+}

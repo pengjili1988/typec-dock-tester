@@ -1,0 +1,98 @@
+{
+  "version": "1.0.0",
+  "name": "HUB-002 测试配置",
+  "createdAt": "2024-02-01T10:00:00Z",
+  "updatedAt": "2024-03-15T16:00:00Z",
+  "author": "系统管理员",
+  "description": "适用于型号HUB-002的多口USB Hub测试配置",
+  "product": {
+    "model": "HUB-002",
+    "vid": "0x1234",
+    "pid": "0x5679",
+    "fwVersion": "2.0.0",
+    "hwVersion": "B1"
+  },
+  "testItems": {
+    "usb": true,
+    "video": false,
+    "audio": false,
+    "network": true,
+    "pd": false,
+    "sd": true,
+    "firmware": true
+  },
+  "usb": {
+    "enabled": true,
+    "protocols": ["USB3.0", "USB3.2"],
+    "speedThresholds": {
+      "readMin": 300,
+      "writeMin": 150
+    },
+    "voltageRange": {
+      "min": 4.75,
+      "max": 5.25
+    },
+    "ovpThreshold": 5.8,
+    "vidPidCheck": {
+      "expectedVid": "0x1234",
+      "expectedPid": "0x5679"
+    },
+    "timeout": 30000,
+    "retries": 3
+  },
+  "video": {
+    "enabled": false,
+    "ports": []
+  },
+  "audio": {
+    "enabled": false,
+    "ports": []
+  },
+  "network": {
+    "enabled": true,
+    "supportedSpeeds": ["1G"],
+    "speedThresholds": {
+      "1G": 900
+    },
+    "macValidation": {
+      "format": "XX:XX:XX:XX:XX:XX"
+    },
+    "macBurnEnabled": false,
+    "macSource": "config"
+  },
+  "pd": {
+    "enabled": false,
+    "protocols": [],
+    "voltages": [],
+    "currents": [],
+    "maxPower": 0,
+    "voltageTolerance": 5,
+    "currentTolerance": 10,
+    "ocpThreshold": 0,
+    "otpThreshold": 0,
+    "emarkerCheck": false
+  },
+  "sd": {
+    "enabled": true,
+    "protocols": ["SD", "TF"],
+    "speedThresholds": {
+      "readMin": 60,
+      "writeMin": 30
+    },
+    "capacityRange": {
+      "min": 4,
+      "max": 128
+    },
+    "timeout": 60000
+  },
+  "firmware": {
+    "enabled": true,
+    "firmwareTypes": ["USB", "MCU"],
+    "versionSources": {},
+    "compareMode": "exact",
+    "expectedVersions": {
+      "USB": "2.0.0",
+      "MCU": "1.5.0"
+    }
+  }
+}
