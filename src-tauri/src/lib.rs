@@ -1,7 +1,9 @@
 mod commands;
 pub mod database;
+pub mod models;
 
 use commands::*;
+use commands::test_commands::AppState;
 use tauri::Manager;
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
@@ -10,6 +12,7 @@ pub fn run() {
         .plugin(tauri_plugin_shell::init())
         .plugin(tauri_plugin_fs::init())
         .plugin(tauri_plugin_dialog::init())
+        .manage(AppState::default())
         .setup(|app| {
             // 初始化数据库
             let app_handle = app.handle().clone();
