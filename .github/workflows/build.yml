@@ -39,35 +39,45 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Copy bundles to workspace
+      - name: Find and copy installers
         shell: pwsh
         run: |
-          $searchPaths = @(
+          # 列出所有可能的bundle目录
+          $possibleBases = @(
             "src-tauri\target\release\bundle",
-            "$env:USERPROFILE\.cargo-target\release\bundle",
+            "C:\Users\Administrator\.cargo-target\release\bundle",
             "C:\Users\runneradmin\.cargo-target\release\bundle"
           )
-          New-Item -ItemType Directory -Force -Path "dist-bundles\msi"
-          New-Item -ItemType Directory -Force -Path "dist-bundles\nsis"
-          foreach ($base in $searchPaths) {
-            $msiDir = "$base\msi"
-            $nsisDir = "$base\nsis"
-            if (Test-Path $msiDir) {
-              Write-Host "Found MSI dir: $msiDir"
-              Get-ChildItem -Path $msiDir -Filter "*.msi" | ForEach-Object {
-                Copy-Item $_.FullName -Destination "dist-bundles\msi\" -Force
-                Write-Host "Copied: $($_.Name)"
-              }
-            }
-            if (Test-Path $nsisDir) {
-              Write-Host "Found NSIS dir: $nsisDir"
-              Get-ChildItem -Path $nsisDir -Filter "*-setup.exe" | ForEach-Object {
-                Copy-Item $_.FullName -Destination "dist-bundles\nsis\" -Force
-                Write-Host "Copied: $($_.Name)"
+          
+          New-Item -ItemType Directory -Force -Path "dist-bundles" | Out-Null
+          $found = $false
+          
+          foreach ($base in $possibleBases) {
+            Write-Host "Checking: $base"
+            if (Test-Path $base) {
+              Write-Host "EXISTS: $base"
+              # 复制所有安装文件
+              Get-ChildItem -Path $base -Recurse -Include "*.msi","*-setup.exe" | ForEach-Object {
+                $dest = "dist-bundles\$($_.Name)"
+                Write-Host "Copying $($_.FullName) -> $dest"
+                Copy-Item $_.FullName -Destination $dest -Force
+                $found = $true
               }
             }
           }
-          Get-ChildItem -Recurse "dist-bundles"
+          
+          if (-not $found) {
+            Write-Host "WARNING: No installers found in known paths. Searching entire system..."
+            Get-ChildItem -Path "C:\Users" -Recurse -Include "*.msi","*-setup.exe" -ErrorAction SilentlyContinue | 
+              Where-Object { $_.FullName -like "*bundle*" } | 
+              ForEach-Object {
+                Write-Host "Found: $($_.FullName)"
+                Copy-Item $_.FullName -Destination "dist-bundles\" -Force
+              }
+          }
+          
+          Write-Host "--- Contents of dist-bundles ---"
+          Get-ChildItem "dist-bundles" | ForEach-Object { Write-Host $_.Name, $_.Length }
 
       - name: Upload Windows installers
         uses: actions/upload-artifact@v4
