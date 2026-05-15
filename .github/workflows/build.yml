@@ -9,12 +9,7 @@ on:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        platform: [windows-latest]
-
-    runs-on: ${{ matrix.platform }}
+    runs-on: windows-latest
 
     steps:
       - name: Checkout repository
@@ -36,12 +31,6 @@ jobs:
         with:
           workspaces: './src-tauri -> target'
 
-      - name: Install dependencies (Ubuntu)
-        if: matrix.platform == 'ubuntu-latest'
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libwebkit2gtk-4.1-dev libappindicator3-dev librsvg2-dev patchelf
-
       - name: Install frontend dependencies
         run: npm ci
 
@@ -50,12 +39,40 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload artifacts
+      - name: Find bundle files
+        id: find_bundles
+        shell: pwsh
+        run: |
+          $paths = @(
+            "src-tauri\target\release\bundle",
+            "$env:USERPROFILE\.cargo-target\release\bundle"
+          )
+          foreach ($p in $paths) {
+            if (Test-Path $p) {
+              Write-Host "Found bundles at: $p"
+              $files = Get-ChildItem -Path $p -Recurse -Include "*.exe","*.msi" | Select-Object -ExpandProperty FullName
+              Write-Host "Files: $files"
+              echo "bundle_path=$p" >> $env:GITHUB_OUTPUT
+              break
+            }
+          }
+
+      - name: Upload MSI installer
         uses: actions/upload-artifact@v4
         with:
-          name: bundles
+          name: dock-tester-windows-msi
           path: |
-            src-tauri/target/${{ matrix.platform == 'macos-latest' && 'release' || 'release' }}/bundle/**
-            !src-tauri/target/**/deps/**
-            !src-tauri/target/**/incremental/**
-          retention-days: 5
+            src-tauri/target/release/bundle/msi/*.msi
+            ${{ env.USERPROFILE }}/.cargo-target/release/bundle/msi/*.msi
+          if-no-files-found: warn
+          retention-days: 30
+
+      - name: Upload NSIS installer
+        uses: actions/upload-artifact@v4
+        with:
+          name: dock-tester-windows-exe
+          path: |
+            src-tauri/target/release/bundle/nsis/*-setup.exe
+            ${{ env.USERPROFILE }}/.cargo-target/release/bundle/nsis/*-setup.exe
+          if-no-files-found: warn
+          retention-days: 30
