@@ -39,40 +39,40 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Find bundle files
-        id: find_bundles
+      - name: Copy bundles to workspace
         shell: pwsh
         run: |
-          $paths = @(
+          $searchPaths = @(
             "src-tauri\target\release\bundle",
-            "$env:USERPROFILE\.cargo-target\release\bundle"
+            "$env:USERPROFILE\.cargo-target\release\bundle",
+            "C:\Users\runneradmin\.cargo-target\release\bundle"
           )
-          foreach ($p in $paths) {
-            if (Test-Path $p) {
-              Write-Host "Found bundles at: $p"
-              $files = Get-ChildItem -Path $p -Recurse -Include "*.exe","*.msi" | Select-Object -ExpandProperty FullName
-              Write-Host "Files: $files"
-              echo "bundle_path=$p" >> $env:GITHUB_OUTPUT
-              break
+          New-Item -ItemType Directory -Force -Path "dist-bundles\msi"
+          New-Item -ItemType Directory -Force -Path "dist-bundles\nsis"
+          foreach ($base in $searchPaths) {
+            $msiDir = "$base\msi"
+            $nsisDir = "$base\nsis"
+            if (Test-Path $msiDir) {
+              Write-Host "Found MSI dir: $msiDir"
+              Get-ChildItem -Path $msiDir -Filter "*.msi" | ForEach-Object {
+                Copy-Item $_.FullName -Destination "dist-bundles\msi\" -Force
+                Write-Host "Copied: $($_.Name)"
+              }
+            }
+            if (Test-Path $nsisDir) {
+              Write-Host "Found NSIS dir: $nsisDir"
+              Get-ChildItem -Path $nsisDir -Filter "*-setup.exe" | ForEach-Object {
+                Copy-Item $_.FullName -Destination "dist-bundles\nsis\" -Force
+                Write-Host "Copied: $($_.Name)"
+              }
             }
           }
+          Get-ChildItem -Recurse "dist-bundles"
 
-      - name: Upload MSI installer
+      - name: Upload Windows installers
         uses: actions/upload-artifact@v4
         with:
-          name: dock-tester-windows-msi
-          path: |
-            src-tauri/target/release/bundle/msi/*.msi
-            ${{ env.USERPROFILE }}/.cargo-target/release/bundle/msi/*.msi
-          if-no-files-found: warn
-          retention-days: 30
-
-      - name: Upload NSIS installer
-        uses: actions/upload-artifact@v4
-        with:
-          name: dock-tester-windows-exe
-          path: |
-            src-tauri/target/release/bundle/nsis/*-setup.exe
-            ${{ env.USERPROFILE }}/.cargo-target/release/bundle/nsis/*-setup.exe
-          if-no-files-found: warn
+          name: dock-tester-windows-installers
+          path: dist-bundles/
+          if-no-files-found: error
           retention-days: 30
